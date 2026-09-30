@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Evaluate Attempt{% endblock %}
+{% block content %}
+<div class="mb-4">
+<h2>Evaluate: {{ attempt.title }}</h2>
+<p class="text-muted">Student: {{ attempt.student_name }}</p>
+</div>
+<form method="post">
+{% for q in questions %}
+<div class="card shadow-sm border-0 mb-4">
+<div class="card-body">
+<h5>Q{{ loop.index }}. {{ q.question_text }}</h5>
+<span class="badge bg-secondary">{{ q.marks }} mark(s)</span>
+
+{% if q.question_type == 'mcq' %}
+<p class="mt-3"><strong>Student answer:</strong> {{ q.answer_text or 'Not answered' }}</p>
+<p><strong>Correct answer:</strong> {{ q.correct_answer }}</p>
+<p><strong>Auto score:</strong> {{ q.marks_awarded }} / {{ q.marks }}</p>
+{% else %}
+<div class="answer-box mt-3">{{ q.answer_text or 'Not answered' }}</div>
+<label class="form-label mt-3">Marks awarded (0 - {{ q.marks }})</label>
+<div class="d-flex gap-2 align-items-center">
+<input class="form-control" type="number" step="0.5" min="0" max="{{ q.marks }}"
+       name="marks_{{ q.answer_id }}" value="{{ q.marks_awarded }}">
+
+</div>
+{% endif %}
+</div></div>
+{% endfor %}
+<div class="alert alert-info mt-3">Descriptive answers are evaluated manually by the teacher. Enter the marks awarded for each answer and save the evaluation.</div>
+<button class="btn btn-success btn-lg">Save Evaluation</button>
+</form>
+{% endblock %}

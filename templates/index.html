@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Home - CloudExam{% endblock %}
+{% block content %}
+<div class="hero p-5 rounded-4 shadow-sm">
+    <div class="row align-items-center">
+        <div class="col-lg-8">
+            <span class="badge bg-primary mb-3">Cloud-Based Examination Platform</span>
+            <h1 class="display-5 fw-bold">Online Examination & Evaluation System</h1>
+            <p class="lead">Conduct exams online, automatically evaluate objective answers, generate results and track student performance.</p>
+            <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg me-2">Login</a>
+            <a href="{{ url_for('register') }}" class="btn btn-outline-primary btn-lg">Create Account</a>
+        </div>
+        <div class="col-lg-4 mt-4 mt-lg-0">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h5>Core Modules</h5>
+                    <ul class="mb-0">
+                        <li>Student Portal</li>
+                        <li>Teacher Portal</li>
+                        <li>Admin Dashboard</li>
+                        <li>Auto MCQ Evaluation</li>
+                        <li>Manual Descriptive Evaluation</li>
+                        <li>Result & Performance Tracking</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

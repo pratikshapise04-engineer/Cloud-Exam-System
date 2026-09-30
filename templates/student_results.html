@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}My Results{% endblock %}
+{% block content %}
+<h2 class="mb-4">My Results</h2>
+<div class="table-responsive">
+<table class="table table-hover">
+<thead><tr><th>Exam</th><th>Score</th><th>Total</th><th>Percentage</th><th>Date</th><th></th></tr></thead>
+<tbody>
+{% for r in results %}
+<tr>
+<td>{{ r.title }}</td><td>{{ r.score }}</td><td>{{ r.total_marks }}</td>
+<td>{{ ((r.score/r.total_marks)*100)|round(2) if r.total_marks else 0 }}%</td>
+<td>{{ r.submitted_at[:19].replace('T',' ') }}</td>
+<td><a class="btn btn-sm btn-outline-primary" href="{{ url_for('result', attempt_id=r.id) }}">View</a></td>
+</tr>
+{% else %}
+<tr><td colspan="6">No results available.</td></tr>
+{% endfor %}
+</tbody></table>
+</div>
+{% endblock %}

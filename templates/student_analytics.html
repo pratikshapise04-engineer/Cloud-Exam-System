@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Performance Analytics{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div><h2>Performance Analytics</h2><p class="text-muted mb-0">Track your results, strengths, weak areas and performance trend.</p></div>
+</div>
+<div class="row g-4 mb-4">
+  <div class="col-md-3"><div class="card stat-card"><div class="stat-label">Average Score</div><div class="stat-number">{{ analytics.average }}%</div></div></div>
+  <div class="col-md-3"><div class="card stat-card"><div class="stat-label">Best Score</div><div class="stat-number">{{ analytics.best }}%</div></div></div>
+  <div class="col-md-3"><div class="card stat-card"><div class="stat-label">Performance Trend</div><div class="stat-number" style="font-size:1.35rem">{{ analytics.trend }}</div></div></div>
+  <div class="col-md-3"><div class="card stat-card"><div class="stat-label">Descriptive Answers Evaluated</div><div class="stat-number">{{ descriptive.evaluated or 0 }}</div></div></div>
+</div>
+<div class="row g-4">
+  <div class="col-md-6"><div class="card h-100"><div class="card-body"><h4>Strengths</h4><p>{{ analytics.strengths }}</p><div class="alert alert-success">Keep building on topics where you consistently score well.</div></div></div></div>
+  <div class="col-md-6"><div class="card h-100"><div class="card-body"><h4>Weak Areas</h4><p>{{ analytics.weak }}</p><div class="alert alert-warning">Review low-scoring questions and teacher feedback.</div></div></div></div>
+</div>
+<div class="card mt-4"><div class="card-body"><h4>Exam Performance</h4>
+<table class="table table-hover"><thead><tr><th>Exam</th><th>Score</th><th>Percentage</th><th>Date</th></tr></thead><tbody>
+{% for r in results %}<tr><td>{{ r.title }}</td><td>{{ r.score }}/{{ r.total_marks }}</td><td>{{ ((r.score/r.total_marks)*100)|round(2) if r.total_marks else 0 }}%</td><td>{{ r.submitted_at[:19].replace('T',' ') }}</td></tr>
+{% else %}<tr><td colspan="4">No completed exams yet.</td></tr>{% endfor %}
+</tbody></table></div></div>
+{% endblock %}

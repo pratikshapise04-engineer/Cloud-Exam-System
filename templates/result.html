@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Result{% endblock %}
+{% block content %}
+<div class="card shadow-sm border-0 mb-4">
+<div class="card-body text-center p-5">
+<h2>{{ attempt.title }}</h2>
+<p class="text-muted">Student: {{ attempt.student_name }}</p>
+<div class="display-4 fw-bold">{{ attempt.score }} / {{ attempt.total_marks }}</div>
+<h4 class="mt-2">{{ percentage }}%</h4>
+</div></div>
+
+<h4>Answer Review</h4>
+{% for q in questions %}
+<div class="card shadow-sm border-0 mb-3">
+<div class="card-body">
+<h5>Q{{ loop.index }}. {{ q.question_text }}</h5>
+{% if q.question_type == 'mcq' %}
+<p><strong>Your answer:</strong> {{ q.answer_text or 'Not answered' }}</p>
+<p><strong>Correct answer:</strong> {{ q.correct_answer }}</p>
+{% else %}
+<p><strong>Your answer:</strong></p>
+<div class="answer-box">{{ q.answer_text or 'Not answered' }}</div>
+{% endif %}
+<p class="mb-0"><strong>Marks awarded:</strong> {{ q.marks_awarded }} / {{ q.marks }}
+{% if q.question_type == 'descriptive' and not q.evaluated %}
+<span class="badge bg-warning text-dark">Pending teacher evaluation</span>
+{% endif %}
+</p>
+</div></div>
+{% endfor %}
+{% endblock %}

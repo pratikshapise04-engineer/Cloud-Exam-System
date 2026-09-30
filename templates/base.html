@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Cloud Exam System{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+
+:root{
+  --primary:#4f46e5;
+  --primary-2:#7c3aed;
+  --primary-soft:#eef2ff;
+  --ink:#172033;
+  --muted:#667085;
+  --surface:#ffffff;
+  --bg:#f6f7fb;
+  --border:#e7e9f2;
+  --success:#0f9d70;
+  --warning:#d98a00;
+  --danger:#dc4c64;
+  --shadow:0 10px 30px rgba(24,32,56,.08);
+  --radius:18px;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  color:var(--ink);
+  background:linear-gradient(180deg,#f8f9ff 0,#f6f7fb 420px);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  line-height:1.6;
+}
+a{text-decoration:none}
+.navbar{
+  padding:.8rem 0!important;
+  background:rgba(255,255,255,.9)!important;
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(231,233,242,.9)!important;
+  box-shadow:0 4px 20px rgba(20,25,45,.04);
+}
+.navbar-brand{font-weight:800!important;color:var(--ink)!important;letter-spacing:-.4px}
+.navbar-brand .brand-mark{
+  display:inline-grid;place-items:center;width:38px;height:38px;margin-right:9px;
+  border-radius:12px;color:white;background:linear-gradient(135deg,var(--primary),var(--primary-2));
+  box-shadow:0 7px 16px rgba(79,70,229,.25);
+}
+.nav-link{font-weight:600!important;color:#667085!important;margin:0 .15rem;padding:.55rem .8rem!important;border-radius:10px}
+.nav-link:hover{background:var(--primary-soft);color:var(--primary)!important}
+.container{max-width:1160px}
+main.container{padding-top:28px;padding-bottom:50px}
+.card{
+  border:1px solid var(--border)!important;
+  border-radius:var(--radius)!important;
+  box-shadow:var(--shadow)!important;
+  background:var(--surface);
+  overflow:hidden;
+}
+.card-header{
+  background:transparent!important;
+  border-bottom:1px solid var(--border)!important;
+  font-weight:750;
+  padding:18px 22px!important;
+}
+.card-body{padding:22px!important}
+.btn{
+  border-radius:11px!important;
+  font-weight:700!important;
+  padding:.62rem 1rem!important;
+  border:none!important;
+  transition:transform .18s ease,box-shadow .18s ease,background .18s ease;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{
+  background:linear-gradient(135deg,var(--primary),var(--primary-2))!important;
+  box-shadow:0 8px 18px rgba(79,70,229,.2);
+}
+.btn-success{background:var(--success)!important}
+.btn-warning{background:#f59e0b!important;color:#fff!important}
+.btn-danger{background:var(--danger)!important}
+.btn-outline-primary{border:1px solid #c7ccff!important;color:var(--primary)!important;background:#fff!important}
+.btn-outline-secondary{border:1px solid var(--border)!important;color:#667085!important;background:#fff!important}
+.form-control,.form-select{
+  border:1px solid #dfe3ee!important;border-radius:11px!important;padding:.72rem .85rem!important;
+  box-shadow:none!important;
+}
+.form-control:focus,.form-select:focus{
+  border-color:#8b84f7!important;box-shadow:0 0 0 4px rgba(79,70,229,.09)!important
+}
+.alert{border:0!important;border-radius:13px!important}
+.table{vertical-align:middle}
+.table thead th{background:#f8f9fd;border-bottom:1px solid var(--border);font-size:.84rem;color:#667085;text-transform:uppercase;letter-spacing:.04em}
+.table td{padding:14px 12px;border-color:var(--border)}
+.badge{border-radius:999px;padding:.45em .75em;font-weight:700}
+.hero{
+  position:relative;overflow:hidden;border-radius:28px;padding:64px 50px;margin-bottom:32px;
+  background:linear-gradient(135deg,#312e81 0%,#4f46e5 50%,#7c3aed 100%);
+  color:#fff;box-shadow:0 22px 45px rgba(79,70,229,.2);
+}
+.hero:after,.hero:before{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.08)}
+.hero:before{width:280px;height:280px;right:-80px;top:-120px}
+.hero:after{width:190px;height:190px;right:130px;bottom:-110px}
+.hero>*{position:relative;z-index:1}
+.hero h1{font-size:clamp(2.2rem,5vw,4rem);font-weight:850;line-height:1.08;letter-spacing:-1.8px}
+.hero p{font-size:1.08rem;color:rgba(255,255,255,.84);max-width:680px}
+.hero .btn-light{color:#3730a3;background:#fff!important}
+.section-title{font-weight:800;letter-spacing:-.5px}
+.feature-card{height:100%;padding:26px}
+.icon-box{
+  width:50px;height:50px;border-radius:14px;display:grid;place-items:center;
+  background:var(--primary-soft);color:var(--primary);font-size:1.35rem;margin-bottom:16px
+}
+.stat-card{padding:22px;position:relative}
+.stat-icon{width:45px;height:45px;border-radius:13px;display:grid;place-items:center;background:var(--primary-soft);color:var(--primary)}
+.stat-number{font-size:2rem;font-weight:850;line-height:1.15;margin-top:14px}
+.stat-label{color:var(--muted);font-weight:600}
+.page-heading{margin:12px 0 25px}
+.page-heading h1{font-weight:850;letter-spacing:-1px}
+.page-heading p{color:var(--muted)}
+.auth-wrap{min-height:calc(100vh - 150px);display:grid;place-items:center}
+.auth-card{max-width:470px;width:100%;margin:30px auto}
+.auth-brand{text-align:center;margin-bottom:25px}
+.exam-card{height:100%;display:flex;flex-direction:column}
+.exam-card .card-body{flex:1}
+.exam-meta{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.meta-pill{background:#f8f9fd;border:1px solid var(--border);border-radius:10px;padding:6px 10px;font-size:.84rem;color:#667085}
+.empty-state{text-align:center;padding:55px 20px;color:var(--muted)}
+.empty-state .empty-icon{font-size:2.5rem;margin-bottom:12px}
+.result-score{
+  font-size:3rem;font-weight:900;letter-spacing:-2px;
+  background:linear-gradient(135deg,var(--primary),var(--primary-2));
+  -webkit-background-clip:text;background-clip:text;color:transparent
+}
+.footer{border-top:1px solid var(--border);background:#fff;color:#667085;padding:28px 0;margin-top:30px}
+.toast-container{z-index:1080}
+@media(max-width:768px){
+  .hero{padding:42px 26px;border-radius:20px}
+  .hero h1{font-size:2.3rem}
+  main.container{padding-top:18px}
+}
+
+</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="{{ url_for('index') }}"><span class="brand-mark"><i class="bi bi-mortarboard-fill"></i></span> CloudExam</a>
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav">
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+                {% if current_user %}
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                    {% if current_role == 'student' %}
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('student_results') }}">My Results</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('student_analytics') }}">Analytics</a></li>
+                    {% endif %}
+                    <li class="nav-item"><span class="nav-link">Hi, {{ current_user }}</span></li>
+                    <li class="nav-item"><span class="badge bg-light text-dark ms-lg-2">☁ {{ cloud_mode }}</span></li>
+                    <li class="nav-item"><a class="btn btn-light btn-sm ms-lg-2" href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container py-4">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show">
+                {{ message }}
+                <button class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+</div>
+
+<footer class="border-top mt-5 py-4 text-center text-muted">
+    <span class="brand-mark"><i class="bi bi-mortarboard-fill"></i></span> CloudExam
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+{% block scripts %}{% endblock %}
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

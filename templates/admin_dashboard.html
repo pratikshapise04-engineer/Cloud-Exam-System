@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<h2 class="mb-4">Admin Dashboard</h2>
+<div class="row g-3 mb-4">
+{% for label, value in [('Users', stats.users), ('Exams', stats.exams), ('Attempts', stats.attempts), ('Questions', stats.questions)] %}
+<div class="col-md-3"><div class="stat-card shadow-sm"><div class="text-muted">{{ label }}</div><div class="display-6 fw-bold">{{ value }}</div></div></div>
+{% endfor %}
+</div>
+<h4>All Exams</h4>
+<div class="table-responsive">
+<table class="table table-bordered align-middle">
+<thead><tr><th>Exam</th><th>Teacher</th><th>Questions</th><th>Status</th><th>Results</th></tr></thead>
+<tbody>
+{% for e in exams %}
+<tr>
+<td>{{ e.title }}</td><td>{{ e.teacher_name }}</td><td>{{ e.question_count }}</td>
+<td>{{ 'Published' if e.is_published else 'Draft' }}</td>
+<td><a class="btn btn-sm btn-outline-primary" href="{{ url_for('exam_results', exam_id=e.id) }}">View</a></td>
+</tr>
+{% else %}<tr><td colspan="5">No exams.</td></tr>{% endfor %}
+</tbody></table>
+</div>
+{% endblock %}

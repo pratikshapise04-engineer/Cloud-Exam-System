@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Exam Results{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+<h2>{{ exam.title }} - Results</h2>
+<a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary">Back</a>
+</div>
+<div class="table-responsive">
+<table class="table table-hover align-middle">
+<thead><tr><th>Rank</th><th>Student</th><th>Email</th><th>Score</th><th>Percentage</th><th>Submitted</th><th>Evaluate</th></tr></thead>
+<tbody>
+{% for a in attempts %}
+<tr>
+<td>{{ loop.index }}</td><td>{{ a.student_name }}</td><td>{{ a.student_email }}</td>
+<td>{{ a.score }} / {{ a.total_marks }}</td>
+<td>{{ ((a.score/a.total_marks)*100)|round(2) if a.total_marks else 0 }}%</td>
+<td>{{ a.submitted_at[:19].replace('T',' ') }}</td>
+<td><a class="btn btn-sm btn-primary" href="{{ url_for('evaluate_attempt', attempt_id=a.id) }}">Open</a></td>
+</tr>
+{% else %}<tr><td colspan="7">No submitted attempts yet.</td></tr>{% endfor %}
+</tbody>
+</table>
+</div>
+{% endblock %}

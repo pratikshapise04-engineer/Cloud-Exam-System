@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Create Exam{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+<div class="col-lg-8">
+<div class="card shadow-sm border-0">
+<div class="card-body p-4">
+<h2>Create New Exam</h2>
+<form method="post">
+    <label class="form-label mt-3">Exam Title</label>
+    <input class="form-control" name="title" placeholder="e.g. Artificial Intelligence Unit Test" required>
+    <label class="form-label mt-3">Description</label>
+    <textarea class="form-control" name="description" rows="4" placeholder="Enter exam instructions..."></textarea>
+    <label class="form-label mt-3">Duration (minutes)</label>
+    <input class="form-control" type="number" name="duration" value="30" min="1" max="300" required>
+    <button class="btn btn-primary mt-4">Create & Add Questions</button>
+</form>
+</div></div></div></div>
+{% endblock %}
